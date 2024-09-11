@@ -1,0 +1,1 @@
+<view class="qb data-v-1cf27b2a"><video-swiper wx:if="{{d}}" class="video-swiper data-v-1cf27b2a" bindupdateNextVideo="{{a}}" bindupdatePreVideo="{{b}}" bindchange="{{c}}" u-i="1cf27b2a-0" bind:__l="__l" u-p="{{d}}"></video-swiper></view>

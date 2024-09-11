@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "uni-app",
+  "usingComponents": {
+    "video-swiper": "../../components/VideoSwiper/index"
+  }
+}
