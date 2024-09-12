@@ -309,33 +309,33 @@ const beforeHasMore = ref(true);
 
 
 const current_index = ref(0); // 这个参数可以控制从第几个视频开始播放（可以从onLoad动态修改这个参数）
-const currentId = '182b2568d7a2c52a'; // 模拟的当前视频的 ID 926b1872a7881a11
+const currentId = '0a0615aeae996fab'; // 模拟的当前视频的 ID 926b1872a7881a11
 const pageSize = 10;
 
 onMounted(async () => {
 	windowWidth.value = uni.getSystemInfoSync().windowWidth;
 	windowHeight.value = uni.getSystemInfoSync().windowHeight;
 	
-	const [beforeVideosErr, beforeVideosRet] = await fetchVideos(currentId, 0); // 获取 currentId 之前的数据
-	const [afterVideosErr, afterVideosRet] = await fetchVideos(currentId, 1, 1); // 获取 currentId 之后的数据（ 包含 currentId)
+	// const [beforeVideosErr, beforeVideosRet] = await fetchVideos(currentId, 0); // 获取 currentId 之前的数据
+	// const [afterVideosErr, afterVideosRet] = await fetchVideos(currentId, 1, 1); // 获取 currentId 之后的数据（ 包含 currentId)
 
-	if (beforeVideosRet && afterVideosRet) {
-		const { list: beforeVideosList, hasMore: bHasMore } = beforeVideosRet;
-		const { list: afterVideosList, hasMore: aHasMore } = afterVideosRet;
-		// 将数据合并到 videoList 中
-		videoList.value = [...beforeVideosList, ...afterVideosList];
-		beforeHasMore.value = bHasMore;
-		afterHasMore.value = aHasMore;
-		current_index.value = videoList.value.findIndex(v => v.rowId === currentId);
-	}
+	// if (beforeVideosRet && afterVideosRet) {
+	// 	const { list: beforeVideosList, hasMore: bHasMore } = beforeVideosRet;
+	// 	const { list: afterVideosList, hasMore: aHasMore } = afterVideosRet;
+	// 	// 将数据合并到 videoList 中
+	// 	videoList.value = [...beforeVideosList, ...afterVideosList];
+	// 	beforeHasMore.value = bHasMore;
+	// 	afterHasMore.value = aHasMore;
+	// 	current_index.value = videoList.value.findIndex(v => v.rowId === currentId);
+	// }
 	
-	// windowWidth.value = uni.getSystemInfoSync().windowWidth;
-	// windowHeight.value = uni.getSystemInfoSync().windowHeight;
+	windowWidth.value = uni.getSystemInfoSync().windowWidth;
+	windowHeight.value = uni.getSystemInfoSync().windowHeight;
 	
-	// videoList.value = mockList;
-	// beforeHasMore.value = false;
-	// afterHasMore.value = false;
-	// current_index.value = videoList.value.findIndex(v => v.rowId === currentId);
+	videoList.value = mockList;
+	beforeHasMore.value = false;
+	afterHasMore.value = false;
+	current_index.value = videoList.value.findIndex(v => v.rowId === currentId);
 
 });
 
