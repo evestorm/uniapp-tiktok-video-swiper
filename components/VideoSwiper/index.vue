@@ -312,6 +312,15 @@
 	const animationfinish = (e) => {
 		const current = e.detail.current;
 		const diff = current - _last.value;
+		const direction = diff === 1 || diff === -2 || (diff === 0 && [1, 2, 3].includes(_last.value)) ? 'up' : 'down';
+		console.log({
+			diff,
+			_last: _last.value,
+			direction,
+		});
+		
+		// if (curQueue.value[swiperCurrent.value].rowId === props.videoList[props.videoList.length - 1].rowId && direction === 'up') return;
+		// if (curQueue.value[0].rowId === props.videoList[0].rowId && direction === 'down') return;
 
 		swiperCurrent.value = current;
 		playCurrent(current);
@@ -334,21 +343,14 @@
 		// diff: 1, _last: 1
 		// diff: 0, _last: 1,2,3
 
-		const direction = diff === 1 || diff === -2 || (diff === 0 && [1, 2, 3].includes(_last.value)) ? 'up' : 'down';
-		console.log({
-			diff,
-			_last: _last.value,
-			direction,
-		});
-
 		// 判断总数据是否大于等于pageSize，并且下滑剩下4个视频开始请求接口拿数据；这里大小可以根据自己需求修改
-		if (total.value >= props.pageSize && nextQueue.value.length < 5 && direction === 'up') {
+		if (total.value >= 10 && nextQueue.value.length < 5 && direction === 'up') {
 			emit('updateNextVideo', curQueue.value[swiperCurrent.value].rowId, (newList, currentIndex) => {
 				videoListChanged(newList, currentIndex);
 			});
 		}
 
-		if (total.value >= props.pageSize && prevQueue.value.length < 5 && direction === 'down') {
+		if (total.value >= 10 && prevQueue.value.length < 5 && direction === 'down') {
 			emit('updatePreVideo', curQueue.value[swiperCurrent.value].rowId, (newList, currentIndex) => {
 				videoListChanged(newList, currentIndex);
 			});
@@ -356,7 +358,15 @@
 
 		if (diff === 0 || total.value <= 4) return;
 
+		// if (
+		// 	curQueue.value[swiperCurrent.value].rowId === props.videoList[props.videoList.length - 1].rowId && direction === 'up'
+		// 	||
+		// 	curQueue.value[0].rowId === props.videoList[0].rowId && direction === 'down'
+		// ) {
+		// 	videoListChanged(props.videoList, props.videoList.findIndex(v => v.rowId === curQueue.value[current].rowId));
+		// }
 		_last.value = current;
+		
 		emit('change', {
 			activeId: curQueue.value[current].rowId,
 			direction
@@ -418,6 +428,10 @@
 			if (add) {
 				curQueue.value[change] = add;
 				nextQueue.value.unshift(remove);
+				const repeatItemIndex = curQueue.value.findIndex(v => v.rowId === remove.rowId);
+				if (repeatItemIndex > -1) {
+					curQueue.value.splice(repeatItemIndex, 1);
+				}
 				_change.value = (change - 1 + 3) % 3;
 			} else {
 				_invalidDown.value += 1;

@@ -4,7 +4,7 @@ if (!Math) {
   VideoSwiper();
 }
 const VideoSwiper = () => "../../components/VideoSwiper/index.js";
-const currentId = "caab09c36d34bf37";
+const currentId = "182b2568d7a2c52a";
 const pageSize = 10;
 const _sfc_main = {
   __name: "index",

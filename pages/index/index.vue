@@ -309,7 +309,7 @@ const beforeHasMore = ref(true);
 
 
 const current_index = ref(0); // 这个参数可以控制从第几个视频开始播放（可以从onLoad动态修改这个参数）
-const currentId = 'caab09c36d34bf37'; // 模拟的当前视频的 ID 926b1872a7881a11
+const currentId = '182b2568d7a2c52a'; // 模拟的当前视频的 ID 926b1872a7881a11
 const pageSize = 10;
 
 onMounted(async () => {

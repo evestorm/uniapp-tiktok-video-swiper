@@ -266,20 +266,20 @@ const _sfc_main = {
     const animationfinish = (e) => {
       const current = e.detail.current;
       const diff = current - _last.value;
-      swiperCurrent.value = current;
-      playCurrent(current);
       const direction = diff === 1 || diff === -2 || diff === 0 && [1, 2, 3].includes(_last.value) ? "up" : "down";
       console.log({
         diff,
         _last: _last.value,
         direction
       });
-      if (total.value >= props.pageSize && nextQueue.value.length < 5 && direction === "up") {
+      swiperCurrent.value = current;
+      playCurrent(current);
+      if (total.value >= 10 && nextQueue.value.length < 5 && direction === "up") {
         emit("updateNextVideo", curQueue.value[swiperCurrent.value].rowId, (newList, currentIndex) => {
           videoListChanged(newList, currentIndex);
         });
       }
-      if (total.value >= props.pageSize && prevQueue.value.length < 5 && direction === "down") {
+      if (total.value >= 10 && prevQueue.value.length < 5 && direction === "down") {
         emit("updatePreVideo", curQueue.value[swiperCurrent.value].rowId, (newList, currentIndex) => {
           videoListChanged(newList, currentIndex);
         });
@@ -340,6 +340,10 @@ const _sfc_main = {
         if (add) {
           curQueue.value[change] = add;
           nextQueue.value.unshift(remove);
+          const repeatItemIndex = curQueue.value.findIndex((v) => v.rowId === remove.rowId);
+          if (repeatItemIndex > -1) {
+            curQueue.value.splice(repeatItemIndex, 1);
+          }
           _change.value = (change - 1 + 3) % 3;
         } else {
           _invalidDown.value += 1;
